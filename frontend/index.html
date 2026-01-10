@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustID Finance | Secure Financial Inclusion</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+
+  <style>
+    :root {
+      --primary: #0057d9;
+      --secondary: #00b894;
+      --dark: #0f172a;
+      --gray: #64748b;
+      --light: #f8fafc;
+      --card: #ffffff;
+    }
+
+    body.dark {
+      --light: #020617;
+      --card: #020617;
+      --dark: #e5e7eb;
+      --gray: #94a3b8;
+      background: #020617;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+    body { background: var(--light); color: var(--dark); line-height: 1.6; transition: 0.3s; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      background: rgba(255,255,255,0.9); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    body.dark nav { background: rgba(2,6,23,0.9); }
+
+    .nav-container {
+      max-width: 1200px; margin: auto; padding: 16px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .logo { font-weight: 800; font-size: 22px; color: var(--primary); }
+
+    .nav-links a {
+      margin-left: 24px; text-decoration: none; color: var(--dark); font-weight: 500;
+    }
+
+    .toggle {
+      margin-left: 20px; cursor: pointer; font-size: 18px;
+    }
+
+    /* HERO */
+    header {
+      padding: 160px 24px 120px; text-align: center;
+      background: linear-gradient(135deg, #0057d9, #003c99); color: white;
+    }
+
+    header h1 { font-size: 52px; font-weight: 800; margin-bottom: 20px; }
+    header p { max-width: 720px; margin: auto; font-size: 20px; opacity: 0.95; }
+
+    .cta {
+      margin-top: 36px; display: inline-block; padding: 14px 32px;
+      background: var(--secondary); color: white; border-radius: 10px;
+      font-weight: 600; text-decoration: none;
+    }
+
+    /* SECTIONS */
+    section { max-width: 1200px; margin: auto; padding: 120px 24px; }
+
+    .section-title { text-align: center; margin-bottom: 70px; }
+    .section-title h2 { font-size: 38px; font-weight: 800; }
+    .section-title p { margin-top: 14px; font-size: 18px; color: var(--gray); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 36px; }
+
+    .card {
+      background: var(--card); padding: 36px; border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      transform: translateY(40px); opacity: 0; transition: 0.6s ease;
+    }
+
+    .card.show { transform: translateY(0); opacity: 1; }
+
+    .card h3 { font-size: 22px; margin-bottom: 12px; }
+    .card p { color: var(--gray); }
+
+    /* ARCHITECTURE */
+    .architecture { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 26px; }
+    .arch-box {
+      background: linear-gradient(135deg, #eef4ff, #ffffff);
+      padding: 28px; border-radius: 16px; text-align: center; font-weight: 600;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+      transform: translateY(40px); opacity: 0; transition: 0.6s ease;
+    }
+    .arch-box.show { transform: translateY(0); opacity: 1; }
+
+    /* DEMO */
+    .demo {
+      max-width: 600px; margin: auto; background: var(--card);
+      padding: 36px; border-radius: 18px; box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    .demo input, .demo button {
+      width: 100%; padding: 14px; margin-top: 16px; border-radius: 10px;
+      border: 1px solid #cbd5e1; font-size: 16px;
+    }
+
+    .demo button { background: var(--primary); color: white; font-weight: 600; cursor: pointer; }
+    
+    /* ===== Ledger Styles ===== */
+#ledger table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#ledger th {
+  background: var(--primary);
+  color: white;
+  padding: 14px;
+  text-align: left;
+}
+
+#ledger td {
+  padding: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+#ledger .credit {
+  color: green;
+  font-weight: 600;
+}
+
+#ledger .debit {
+  color: red;
+  font-weight: 600;
+}
+
+#ledger .verified {
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+
+    footer {
+      background: #020617; color: #cbd5f5; padding: 80px 24px; text-align: center;
+    }
+
+    footer h3 { color: white; margin-bottom: 14px; }
+
+    @media(max-width: 600px) {
+      header h1 { font-size: 38px; }
+      .section-title h2 { font-size: 30px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo">TrustID Finance</div>
+    <div class="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#technology">Technology</a>
+      <a href="#demo">Demo</a>
+      <span class="toggle" onclick="toggleDark()">🌙</span>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <h1>Securing the Unbanked.<br>Empowering the Future.</h1>
+  <p>AI-powered trust scoring and deepfake-resistant identity verification for secure micro-finance.</p>
+  <a href="#demo" class="cta">Try Demo</a>
+</header>
+
+<section id="problem">
+  <div class="section-title"><h2>The Problem</h2><p>Credit and trust gaps block financial inclusion</p></div>
+  <div class="grid">
+    <div class="card"><h3>Credit Gap</h3><p>1.4 billion adults lack formal credit scores.</p></div>
+    <div class="card"><h3>Trust Gap</h3><p>Deepfake fraud makes digital banking unsafe.</p></div>
+  </div>
+</section>
+
+<section id="solution">
+  <div class="section-title"><h2>Our Solution</h2><p>Access with security built-in</p></div>
+  <div class="grid">
+    <div class="card"><h3>Micro-Trust Scoring</h3><p>AI builds alternative credit profiles.</p></div>
+    <div class="card"><h3>DeepShield Protection</h3><p>Multimodal liveness blocks impersonation.</p></div>
+  </div>
+</section>
+
+<section id="technology">
+  <div class="section-title"><h2>Azure Architecture</h2><p>Transparent, secure and explainable AI on Microsoft Azure</p></div>
+  <div class="architecture">
+    <div class="arch-box">📱 Mobile App<br><small>React / Power Apps</small></div>
+    <div class="arch-box">🧠 Azure AI Vision<br><small>Inventory OCR & Detection</small></div>
+    <div class="arch-box">🎤 Azure AI Speech & Face<br><small>Liveness & Anti-Deepfake</small></div>
+    <div class="arch-box">✨ Azure OpenAI (GPT-4o)<br><small>Reasoning & Explainability</small></div>
+    <div class="arch-box">🗄 Azure SQL<br><small>Micro-Trust Score</small></div>
+    <div class="arch-box">🏦 Bank APIs<br><small>Loan Decisions</small></div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="section-title"><h2>Live Demo</h2><p>AI-powered Micro-Trust Score Generation</p></div>
+  <div class="demo">
+    <label><strong>Business Name</strong></label>
+    <input placeholder="Street Food Stall / Kirana Store" />
+
+    <label><strong>Monthly Digital Wallet Flow (₹)</strong></label>
+    <input placeholder="e.g. 25000" />
+
+    <label><strong>Upload Inventory Photo</strong></label>
+    <input type="file" accept="image/*" />
+
+    <label><strong>Face Verification (Camera)</strong></label>
+    <video id="video" autoplay playsinline style="width:100%;border-radius:12px;margin-top:10px"></video>
+    <button onclick="startCamera()">Start Face Verification</button>
+
+    <button style="margin-top:20px" onclick="generateScore()">Generate Micro-Trust Score</button>
+
+    <p id="result" style="margin-top:16px;font-weight:600"></p>
+  </div>
+</section>
+
+<section id="explainable">
+  <div class="section-title"><h2>Explainable Micro-Trust Score</h2><p>No black-box decisions — full transparency</p></div>
+  <div class="grid">
+    <div class="card"><h3>📦 Inventory Strength</h3><p>35% — Stock quantity & consistency verified via AI Vision.</p></div>
+    <div class="card"><h3>💳 Wallet Cash Flow</h3><p>30% — Regular digital transactions indicate stability.</p></div>
+    <div class="card"><h3>🧑‍💼 Identity Confidence</h3><p>25% — Liveness & anti-deepfake verification.</p></div>
+    <div class="card"><h3>🌐 Supply Chain Context</h3><p>10% — Local market & seasonal demand trends.</p></div>
+  </div>
+</section>
+
+<section id="coach">
+  <div class="section-title"><h2>AI Financial Coach</h2><p>Guiding — not pushing — responsible borrowing</p></div>
+  <div class="demo">
+    <p><strong>Loan Simulation:</strong></p>
+    <p>If you borrow <strong>₹10,000</strong> for <strong>3 months</strong>:</p>
+    <ul>
+      <li>Monthly EMI: ₹3,450</li>
+      <li>Risk Level: Medium</li>
+      <li>Business Impact: Inventory expansion possible</li>
+    </ul>
+    <p style="margin-top:12px"><em>Advice:</em> Consider borrowing after festival season to reduce risk.</p>
+  </div>
+</section>
+
+<section id="community">
+  <div class="section-title"><h2>Community Trust Signals</h2><p>Human trust + AI trust</p></div>
+  <div class="grid">
+    <div class="card"><h3>Supplier Endorsement</h3><p>Verified QR approval from wholesalers.</p></div>
+    <div class="card"><h3>Market Association</h3><p>Local business group validation.</p></div>
+    <div class="card"><h3>NGO / SHG Support</h3><p>Trusted community backing.</p></div>
+  </div>
+</section>
+
+<section id="bank">
+  <div class="section-title"><h2>Bank Dashboard (Concept)</h2><p>Security as a strategic advantage</p></div>
+  <div class="grid">
+    <div class="card"><h3>Fraud Heat Map</h3><p>Real-time deepfake & phishing attempt density.</p></div>
+    <div class="card"><h3>Risk Alerts</h3><p>Borderline scores flagged for review.</p></div>
+    <div class="card"><h3>Audit Logs</h3><p>Every AI decision traceable.</p></div>
+  </div>
+</section>
+
+<section id="human">
+  <div class="section-title"><h2>Human-in-the-Loop</h2><p>AI with accountability</p></div>
+  <div class="demo">
+    <p><strong>Status:</strong> Borderline Trust Score detected</p>
+    <p>Escalating to 1-minute video verification with human agent.</p>
+    <button>Start Human Review</button>
+  </div>
+</section>
+
+<section id="offline">
+  <div class="section-title"><h2>Offline-First Design</h2><p>Built for low connectivity regions</p></div>
+  <div class="grid">
+    <div class="card"><h3>Offline Capture</h3><p>Photos & voice saved locally.</p></div>
+    <div class="card"><h3>Smart Sync</h3><p>Auto-upload on 3G/Wi-Fi.</p></div>
+    <div class="card"><h3>Low-Data Mode</h3><p>Compressed uploads for low-end phones.</p></div>
+  </div>
+</section>
+<!-- ================= LEDGER SECTION ================= -->
+<section id="ledger">
+  <div class="section-title">
+    <h2>Verified Ledger Entries</h2>
+    <p>Immutable, AI-verified financial transactions</p>
+  </div>
+
+  <div class="demo" style="overflow-x:auto;">
+    <p id="ledgerStatus" style="font-weight:700;margin-bottom:12px">
+  Checking ledger integrity…
+</p>
+
+    <table id="ledgerTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Amount (₹)</th>
+          <th>Balance (₹)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="5" style="text-align:center;">Loading ledger…</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button onclick="checkLedgerIntegrity()"
+  style="margin-top:16px;width:100%;">
+  Verify Ledger Integrity
+</button>
+
+</section>
+<!-- ================================================= -->
+<!-- ================= TRUST SCORE HISTORY ================= -->
+<section id="trust-history">
+  <div class="section-title">
+    <h2>Trust Score History</h2>
+    <p>AI-generated trust score evolution over time</p>
+  </div>
+
+  <div class="demo">
+    <canvas id="trustChart" height="120"></canvas>
+  </div>
+</section>
+<!-- ======================================================= -->
+
+
+
+<footer>
+  <h3>TrustID Finance</h3>
+  <p>Imagine Cup Project • Secure Financial Inclusion with Azure AI</p>
+</footer>
+
+<script>
+  function toggleDark() {
+    document.body.classList.toggle('dark');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('show');
+    });
+  });
+  document.querySelectorAll('.card, .arch-box').forEach(el => observer.observe(el));
+
+  // Camera / Face verification
+  let stream;
+  async function startCamera() {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+      document.getElementById('video').srcObject = stream;
+      alert('Face detected. Please blink twice to complete liveness check.');
+    } catch (e) {
+      alert('Camera access denied');
+    }
+  }
+
+  // Generate Micro-Trust Score
+  // Generate Micro-Trust Score (REAL Azure AI)
+ async function generateScore() {
+  try {
+    const formData = new FormData();
+
+    // 1️⃣ Wallet Flow
+    const walletInput = document.querySelector(
+      "input[placeholder*='25000']"
+    ).value;
+    formData.append("walletFlow", walletInput);
+
+    // 2️⃣ Inventory Image
+    const inventoryInput = document.querySelector("input[type='file']");
+    if (!inventoryInput.files[0]) {
+      alert("Please upload inventory photo");
+      return;
+    }
+    formData.append("inventory", inventoryInput.files[0]);
+
+    // 3️⃣ Capture selfie from camera
+    const video = document.getElementById("video");
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext("2d").drawImage(video, 0, 0);
+    const selfieBlob = await new Promise(r =>
+      canvas.toBlob(r, "image/jpeg")
+    );
+    formData.append("selfie", selfieBlob);
+
+    // 4️⃣ Call backend
+    const response = await fetch(
+      "http://localhost:5000/api/trust/score",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const result = await response.json();
+
+    // 5️⃣ Display result
+    document.getElementById("result").innerHTML = `
+      <strong>Micro-Trust Score:</strong> ${result.microTrustScore}/100<br>
+      <strong>Risk Level:</strong> ${result.riskLevel}<br><br>
+      <em>Status:</em> ${result.status}
+    `;
+
+  } catch (err) {
+    document.getElementById("result").innerText =
+      "Error generating trust score. Please try again.";
+  }
+}
+// ===== Ledger Loader =====
+async function loadLedger() {
+  const tbody = document.querySelector("#ledgerTable tbody");
+  tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Loading ledger…</td></tr>`;
+
+  try {
+    const response = await fetch("http://localhost:5000/api/ledger");
+    const ledger = await response.json();
+
+    if (!ledger || ledger.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No transactions found</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = ledger.map(tx => `
+  <tr>
+    <td>${tx.date}</td>
+    <td>${tx.description}</td>
+    <td class="${tx.amount >= 0 ? 'credit' : 'debit'}">
+      ${tx.amount}
+    </td>
+    <td>${tx.balance ?? "-"}</td>
+    <td class="${tx.status === 'Verified' ? 'verified' : 'debit'}">
+      ${tx.status === 'Verified' ? '✔ Verified' : '✖ Unverified'}
+    </td>
+  </tr>
+`).join("");
+
+
+
+  } catch (error) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Failed to load ledger</td></tr>`;
+    console.error(error);
+  }
+}
+async function checkLedgerIntegrity() {
+  try {
+    const res = await fetch("http://localhost:5000/api/ledger/verify");
+    const data = await res.json();
+
+    alert(
+      data.integrity === "VALID"
+        ? "✅ Ledger integrity verified"
+        : "❌ Ledger tampered!"
+    );
+  } catch (e) {
+    alert("Ledger verification failed");
+  }
+}
+
+
+// Auto-load ledger when page opens
+window.addEventListener("DOMContentLoaded", () => {
+  loadLedger();
+  loadTrustHistory();
+  verifyLedgerIntegrity();
+});
+
+
+
+
+
+</script>
+<script>
+async function verifyLedgerIntegrity() {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/ledger/verify"
+    );
+    const result = await response.json();
+
+    const status = document.getElementById("ledgerStatus");
+
+    if (result.ledgerValid) {
+      status.innerHTML = "🛡 Ledger Integrity: VERIFIED";
+      status.style.color = "green";
+    } else {
+      status.innerHTML = "⚠ Ledger Integrity: TAMPERED";
+      status.style.color = "red";
+    }
+  } catch (err) {
+    console.error("Ledger verification failed", err);
+  }
+}
+</script>
+
+<script>
+async function loadTrustHistory() {
+  try {
+    const response = await fetch("http://localhost:5000/api/trust/history");
+    const history = await response.json();
+
+    if (!history || history.length === 0) return;
+
+    const labels = history.map(h =>
+      new Date(h.timestamp).toLocaleDateString()
+    );
+    const scores = history.map(h => h.score);
+
+    const ctx = document.getElementById("trustChart").getContext("2d");
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [{
+          label: "Trust Score",
+          data: scores,
+          tension: 0.4,
+          borderWidth: 3,
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { min: 0, max: 100 }
+        }
+      }
+    });
+  } catch (err) {
+    console.error("Failed to load trust history", err);
+  }
+}
+</script>
+
+
+</body>
+  </html>
+  
