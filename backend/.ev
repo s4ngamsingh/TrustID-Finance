@@ -1,5 +1,3 @@
-AZURE_ML_ENDPOINT=https://<your-ml-endpoint>.inference.ml.azure.com/score
-AZURE_ML_KEY=<your-azure-ml-key>
+AZURE_ML_ENDPOINT=MOCK
 
-AZURE_FACE_ENDPOINT=https://<your-region>.api.cognitive.microsoft.com
-AZURE_FACE_KEY=<your-face-api-key>
+AZURE_ML_KEY=MOCK
