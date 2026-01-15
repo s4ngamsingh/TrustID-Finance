@@ -168,7 +168,7 @@ Risk indicators
 
 ## 👨‍💻 Team
 
-**Project Name:** TrustID Labs
+**Project Name:** TrustID Finance 
 **Category:** FinTech / Financial Inclusion  
 **Platform:** Web Application  
 
